@@ -40,3 +40,44 @@ function f(a, b) {
 }
 
 f.defer(1000)(1, 2); // выведет 3 через 1 секунду.
+
+//task 4
+function _sum(a) {
+    f.toString = function () {
+        return a
+    }
+
+    function f (b) {
+        a += b
+        return f
+    }
+
+    return f
+}
+console.log(_sum(3)(4)(4).toString())
+
+//task 5
+function makeCounter() {
+    let count = 0;
+
+    function f() {
+        return count++
+    }
+
+    f.set = (a) => count = a
+    f.decrease = () => --count
+    return f
+}
+
+let counter = makeCounter();
+
+console.log( counter() ); // 0
+console.log( counter() ); // 1
+
+counter.set(10); // установить новое значение счётчика
+
+console.log( counter() ); // 10
+
+counter.decrease(); // уменьшить значение счётчика на 1
+
+console.log( counter() ); // 10 (вместо 11)
